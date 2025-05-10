@@ -5,9 +5,10 @@
     "lib": ["es6"],
     "strict": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "dist"
   },
-  "include": ["src/**/*"]
+  "include": ["api/**/*"]
 }
