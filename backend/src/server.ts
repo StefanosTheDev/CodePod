@@ -7,6 +7,7 @@ app.use(express.json());
 app.get('/', (_req: Request, res: Response) => {
   res.send('✅ Hello from Express + TypeScript + Vercel!');
 });
+// Hello World
 
 // 👇 Only run if NOT in Vercel (i.e., local dev)
 if (process.env.NODE_ENV !== 'production') {
