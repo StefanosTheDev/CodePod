@@ -1,23 +1,23 @@
 import dotenv from 'dotenv';
-dotenv.config(); // ← load local .env first
+dotenv.config();
 
 import express from 'express';
-import { connectToDatabase } from './config/db';
+import authRouter from './routes/auth';
+import { verifyFirebaseToken } from '../src/middleware/verifyFirebaseToken';
 
 const app = express();
 app.use(express.json());
 
-// kick off DB connection (in dev and prod)
-connectToDatabase().catch((err) =>
-  console.error('❌ MongoDB connection error:', err)
-);
-
-// your single health‐check endpoint
 app.get('/', (_req, res) => {
-  res.send('✅ API is live and connected to MongoDB');
+  res.send('We In this  ');
 });
 
-// only call listen() when you run locally
+// 🔐 Auth endpoints
+app.use('/auth', authRouter);
+app.get('/protected', verifyFirebaseToken, (req, res) => {
+  res.json({ message: `Hello ${req.user?.email}, you’re in!` });
+});
+
 if (process.env.NODE_ENV !== 'production') {
   const PORT = Number(process.env.PORT) || 3000;
   app.listen(PORT, () =>
@@ -25,4 +25,4 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-export default app; // ← this is what Vercel imports
+export default app;
